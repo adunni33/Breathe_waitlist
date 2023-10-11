@@ -39,14 +39,14 @@ function App() {
               <input
                 type="text"
                 placeholder="Name"
-                className="no-border p-[16px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]"
+                className="no-border p-[16px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal] w-[100%] lg:w-[400px] xl:w-[500px]"
               />
             </div>
             <div className="border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] rounded-[8px]">
               <input
                 type="text"
                 placeholder="Email"
-                className="no-border p-[16px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]"
+                className="no-border p-[16px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal] w-[100%] lg:w-[400px] xl:w-[500px]"
               />
             </div>
             <div className="flex justify-between items-center rounded-[8px] border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]">
@@ -71,7 +71,7 @@ function App() {
                 />
               </svg>
               {isOpen && (
-                <div className="dropdown absolute bg-[#fff] border-[1px] border-[#B2BBB6] rounded-[8px] py-[24px] px-[16px] w-[226px] h-[178px] top-[32rem] lg:top-[47rem] lg:left-[330px] xl:left-[390px] left-[130px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]">
+                <div className="dropdown absolute bg-[#fff] border-[1px] border-[#B2BBB6] rounded-[8px] py-[24px] px-[16px] w-[226px] h-[130px] top-[32rem] lg:top-[47rem] lg:left-[330px] xl:left-[390px] left-[130px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]">
                   <ul className="flex flex-col gap-[20px]">
                     <li
                       onClick={() => handleOptionSelect("Patient")}
