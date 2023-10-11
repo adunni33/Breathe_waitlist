@@ -1,38 +1,25 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400&family=Nunito+Sans:ital,opsz@0,6..12;1,6..12&family=Poppins:wght@100;200&family=Raleway:ital,wght@0,100;1,100&family=Work+Sans:wght@100;200;400&display=swap');
+
+
+.marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.marquee-content {
+  animation: marquee 10s linear infinite;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.no-border:focus {
+  box-shadow: none !important;
+  outline: none;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: translateX(-100%);
   }
 }
