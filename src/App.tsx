@@ -8,8 +8,9 @@ import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("Category");
+  const [selectedOption, setSelectedOption] = useState("");
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [categoryError, setCategoryError] = useState<string | null>(null);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -25,6 +26,13 @@ function App() {
   const sendEmail = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!selectedOption) {
+      setCategoryError("Please select a category before submitting.");
+      return;
+    }
+
+    setCategoryError(null);
+
     if (formRef.current) {
       emailjs
         .sendForm(
@@ -37,7 +45,7 @@ function App() {
           (result: EmailJSResponseStatus) => {
             console.log("Email sent successfully:", result.text);
             formRef.current?.reset();
-            setSelectedOption("Category");
+            setSelectedOption("");
             setShowSuccessMessage(true);
             setTimeout(() => {
               setShowSuccessMessage(false);
@@ -121,6 +129,9 @@ function App() {
                   strokeLinejoin="round"
                 />
               </svg>
+              <div className="error-message text-red-600 font-semibold mt-2 absolute top-[420px] lg:top-[655px]">
+                {categoryError}
+              </div>
               {isOpen && (
                 <div className="dropdown absolute bg-[#fff] border-[1px] border-[#B2BBB6] rounded-[8px] py-[24px] px-[16px] w-[226px] h-[130px] top-[32rem] lg:top-[47rem] lg:left-[330px] xl:left-[390px] left-[130px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]">
                   <ul className="flex flex-col gap-[20px]">
