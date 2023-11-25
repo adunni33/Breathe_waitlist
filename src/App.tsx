@@ -91,18 +91,21 @@ function App() {
                 required
               />
             </div>
-            <div className="flex justify-between items-center rounded-[8px] border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]">
+            <div
+              onClick={toggleDropdown}
+              className="flex justify-between items-center rounded-[8px] border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]"
+            >
               <input
                 type="text"
                 id="user_input"
                 name="user_input"
                 value={selectedOption}
                 placeholder="Category"
+                readOnly
                 className="p-[16px] no-border w-full cursor-pointer"
                 required
               />
               <svg
-                onClick={toggleDropdown}
                 className="pr-[10px] cursor-pointer"
                 width="25"
                 height="25"
