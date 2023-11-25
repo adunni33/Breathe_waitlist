@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import "./App.css";
 import img from "./assets/copy.png";
 import img_phone from "./assets/Rectangle.png";
 import { Footer } from "./Footer";
 import { useState } from "react";
+import emailjs, { EmailJSResponseStatus } from "@emailjs/browser";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Category");
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -16,6 +18,36 @@ function App() {
   const handleOptionSelect = (option: string) => {
     setSelectedOption(option);
     setIsOpen(false);
+  };
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  const sendEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (formRef.current) {
+      emailjs
+        .sendForm(
+          "service_7z533gq",
+          "template_no76k4c",
+          formRef.current,
+          "dLPdlcf1B8ic4ZTE2"
+        )
+        .then(
+          (result: EmailJSResponseStatus) => {
+            console.log("Email sent successfully:", result.text);
+            formRef.current?.reset();
+            setSelectedOption("Category");
+            setShowSuccessMessage(true);
+            setTimeout(() => {
+              setShowSuccessMessage(false);
+            }, 5000);
+          },
+          (error: EmailJSResponseStatus) => {
+            console.error("Email sending failed:", error.text);
+          }
+        );
+    }
   };
   return (
     <>
@@ -27,7 +59,11 @@ function App() {
           <img src={img} alt="logo" />
         </div>
         <div className="flex flex-col lg:flex-row justify-between items-center">
-          <div className="flex flex-col items-start gap-[20px] py-[30px] lg:py-0">
+          <form
+            ref={formRef}
+            onSubmit={sendEmail}
+            className="flex flex-col items-start gap-[20px] py-[30px] lg:py-0"
+          >
             <h1 className="text-[#2F2F30] text-[32px] text-center lg:text-start lg:text-[54px] w-[330px] lg:w-[500px] xl:w-[565px] not-italic font-[700] leading-[normal]">
               Taking your Mental Health Priority
             </h1>
@@ -37,22 +73,34 @@ function App() {
             </p>
             <div className="border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] rounded-[8px]">
               <input
+                id="user_name"
+                name="user_name"
                 type="text"
                 placeholder="Name"
                 className="no-border p-[16px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal] w-[100%] lg:w-[400px] xl:w-[500px]"
+                required
               />
             </div>
             <div className="border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] rounded-[8px]">
               <input
-                type="text"
+                id="user_emil"
+                name="user_email"
+                type="email"
                 placeholder="Email"
                 className="no-border p-[16px] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal] w-[100%] lg:w-[400px] xl:w-[500px]"
+                required
               />
             </div>
             <div className="flex justify-between items-center rounded-[8px] border-[1px] w-[100%] lg:w-[450px] xl:w-[512px] border-[#B2BBB6] text-[#2F2F30] text-[18px] not-italic font-[400] leading-[normal]">
-              <p className="p-[16px]" placeholder="Category">
-                {selectedOption}
-              </p>
+              <input
+                type="text"
+                id="user_input"
+                name="user_input"
+                value={selectedOption}
+                placeholder="Category"
+                className="p-[16px] no-border w-full cursor-pointer"
+                required
+              />
               <svg
                 onClick={toggleDropdown}
                 className="pr-[10px] cursor-pointer"
@@ -89,10 +137,18 @@ function App() {
                 </div>
               )}
             </div>
-              <button className="w-[212px] m-auto lg:m-0 h-[48px] px-[31px] rounded-[16px] bg-[#2131BA] text-[#FFF] text-[20px] not-italic font-[600] leading-[normal]">
-                Join Waitlist
-              </button>
-          </div>
+            <button
+              type="submit"
+              className="w-[212px] m-auto lg:m-0 h-[48px] px-[31px] rounded-[16px] bg-[#2131BA] text-[#FFF] text-[20px] not-italic font-[600] leading-[normal]"
+            >
+              Join Waitlist
+            </button>
+            {showSuccessMessage && (
+              <div className="text-green-600 font-semibold mt-4 flex justify-center">
+                Form submitted successfully!
+              </div>
+            )}
+          </form>
           <div className="lg:w-[410.224px] lg:h-[788px] w-[180.124px] h-[346px]">
             <img src={img_phone} alt="phone" />
           </div>
